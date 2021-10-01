@@ -1,6 +1,6 @@
 from speedtest import Speedtest
 from bot.helper.telegram_helper.filters import CustomFilters
-from bot import dispatcher
+from bot import dispatcher, AUTHORIZED_CHATS
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.message_utils import sendMessage, editMessage
 from telegram.ext import CommandHandler
@@ -14,13 +14,13 @@ def speedtest(update, context):
     test.upload()
     test.results.share()
     result = test.results.dict()
+    path = (result['share'])
     string_speed = f'''
 <b>Server</b>
 <b>Name:</b> <code>{result['server']['name']}</code>
 <b>Country:</b> <code>{result['server']['country']}, {result['server']['cc']}</code>
 <b>Sponsor:</b> <code>{result['server']['sponsor']}</code>
 <b>ISP:</b> <code>{result['client']['isp']}</code>
-
 <b>SpeedTest Results</b>
 <b>Upload:</b> <code>{speed_convert(result['upload'] / 8)}</code>
 <b>Download:</b>  <code>{speed_convert(result['download'] / 8)}</code>
